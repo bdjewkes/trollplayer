@@ -7,12 +7,19 @@ public enum ActionEnum {
     XOR,
     OR,
     AND,
-    NOT
+    NOT,
+    NOP
 }
 
 
 public class Substance {
     int state;
+
+    public int State { get { return state; } }
+
+    const int NUM_BITS = 4;
+
+    const int STATE_MASK = 0xF;
 
     public Substance(int initialState) {
         state = initialState;
@@ -26,7 +33,9 @@ public class Substance {
             case ActionEnum.OR: state = state | secondSubstance.state; break;
             case ActionEnum.AND: state = state & secondSubstance.state; break;
             case ActionEnum.NOT: state = ~state; break;
+            case ActionEnum.NOP: break;
         }
+        state = state & STATE_MASK;
     }
 
     public override string ToString() {

@@ -8,24 +8,35 @@ public class Station : MonoBehaviour {
 
     public ParticleSystem[] FX;
 
+    public GameObject[] MeasurementFX;
+
     public float timeToReact = 0.5f;
     public float timeToPlayFX = 1;
 
     [SerializeField]
     int testSubstanceState;
 
+    public bool[] measuresBits = new bool[4];
+
     public void Awake() {
-        TurnOff();
+        TurnOffReactionFX();
+        TurnOffMeasurementFX();
     }
 
-    void TurnOff() {
+    void TurnOffReactionFX() {
         foreach (var particle in FX) {
             var em = particle.emission;
             em.enabled = false;
         }
     }
 
-    public IEnumerator PerformAction(Substance substance) {
+    void TurnOffMeasurementFX() {
+        foreach (var obj in MeasurementFX) {
+            obj.SetActive(false);
+        }
+    }
+
+    public virtual IEnumerator PerformAction(Substance substance) {
         yield return new WaitForSeconds(timeToReact);
 
         foreach (var particle in FX) {
@@ -37,7 +48,25 @@ public class Station : MonoBehaviour {
 
         yield return new WaitForSeconds(timeToPlayFX);
 
-        TurnOff();
+        TurnOffReactionFX();
+
+        yield return StartCoroutine(Measure(substance));   
+    }
+
+    public IEnumerator Measure(Substance substance) {
+        for (int i = 0; i < 4; i++) {
+            if (measuresBits[i]) {
+                bool bitSet = ((1 << i) & substance.State) > 0;
+                Jot.Out("Measured bit", i, bitSet);
+                if (bitSet) {
+                    MeasurementFX[i].SetActive(true);
+                }
+            }
+        }
+        yield return new WaitForSeconds(1f);
+
+        TurnOffMeasurementFX();
+        Jot.Out("Done measuring");
     }
 
     [ContextMenu("Test Perform Action")]
