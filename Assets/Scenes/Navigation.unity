@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 42729195}
   m_Layer: 0
-  m_Name: Rotator
+  m_Name: Rotator2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,13 +106,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 42729194}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.8660255, z: 0, w: 0.49999988}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 544340632}
   m_Father: {fileID: 921357803}
-  m_RootOrder: 4
+  m_RootOrder: 2
 --- !u!1001 &119711569
 Prefab:
   m_ObjectHideFlags: 0
@@ -177,13 +177,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 191399917}
-  m_LocalRotation: {x: 0, y: 0.8660255, z: 0, w: 0.49999988}
+  m_LocalRotation: {x: 0, y: 0.86602527, z: 0, w: -0.50000024}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1885070995}
   m_Father: {fileID: 921357803}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &409734339
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409734340}
   m_Layer: 0
-  m_Name: Rotator1
+  m_Name: Rotator0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,7 +205,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 409734339}
-  m_LocalRotation: {x: 0, y: 0.86602527, z: 0, w: -0.50000024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -233,13 +233,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 434287102}
-  m_LocalRotation: {x: 0, y: 0.50000006, z: 0, w: 0.8660254}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 1689308166}
   m_Father: {fileID: 921357803}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1001 &544340631
 Prefab:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_Name
-      value: Station1
+      value: Station2
       objectReference: {fileID: 0}
     - target: {fileID: 400072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_LocalScale.x
@@ -343,7 +343,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_Name
-      value: Station1
+      value: Station0
       objectReference: {fileID: 0}
     - target: {fileID: 400072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_LocalScale.x
@@ -396,9 +396,9 @@ Transform:
   m_Children:
   - {fileID: 409734340}
   - {fileID: 2013858742}
+  - {fileID: 42729195}
   - {fileID: 434287103}
   - {fileID: 191399918}
-  - {fileID: 42729195}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!114 &921357804
@@ -415,11 +415,12 @@ MonoBehaviour:
   stations:
   - {fileID: 1236796151}
   - {fileID: 1674463528}
+  - {fileID: 2100296394}
   - {fileID: 1310148902}
   - {fileID: 805592334}
-  - {fileID: 2100296394}
   arcPerStation: 60
-  rotationalVelocity: 10
+  currentStationIndex: 0
+  rotationalVelocity: 20
 --- !u!1001 &1160954743
 Prefab:
   m_ObjectHideFlags: 0
@@ -461,7 +462,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_Name
-      value: Station2
+      value: Station1
       objectReference: {fileID: 0}
     - target: {fileID: 400072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_LocalScale.x
@@ -774,7 +775,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 2013858742}
   m_Layer: 0
-  m_Name: Rotator2
+  m_Name: Rotator1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -786,7 +787,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2013858741}
-  m_LocalRotation: {x: 0, y: 0.49999982, z: 0, w: -0.8660255}
+  m_LocalRotation: {x: 0, y: 0.50000006, z: 0, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
