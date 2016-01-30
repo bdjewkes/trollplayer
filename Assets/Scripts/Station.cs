@@ -12,25 +12,25 @@ public class Station : MonoBehaviour {
 
     public float timeToReact = 0.5f;
     public float timeToPlayFX = 1;
-
-    [SerializeField]
-    int testSubstanceState;
-
+    
     public bool[] measuresBits = new bool[4];
 
-    public void Awake() {
-        TurnOffReactionFX();
+    [SerializeField]
+    protected int testSubstanceState;
+
+    protected virtual void Awake() {
+        ShowReactionFX(false);
         TurnOffMeasurementFX();
     }
 
-    void TurnOffReactionFX() {
+    protected void ShowReactionFX(bool show) {
         foreach (var particle in FX) {
             var em = particle.emission;
-            em.enabled = false;
+            em.enabled = show;
         }
     }
 
-    void TurnOffMeasurementFX() {
+    protected void TurnOffMeasurementFX() {
         foreach (var obj in MeasurementFX) {
             obj.SetActive(false);
         }
@@ -48,7 +48,7 @@ public class Station : MonoBehaviour {
 
         yield return new WaitForSeconds(timeToPlayFX);
 
-        TurnOffReactionFX();
+        ShowReactionFX(false);
 
         yield return StartCoroutine(Measure(substance));   
     }
@@ -58,7 +58,7 @@ public class Station : MonoBehaviour {
             if (measuresBits[i]) {
                 bool bitSet = ((1 << i) & substance.State) > 0;
                 Jot.Out("Measured bit", i, bitSet);
-                if (bitSet) {
+                if (bitSet && MeasurementFX.Length > i && MeasurementFX[i]) {
                     MeasurementFX[i].SetActive(true);
                 }
             }
@@ -70,7 +70,7 @@ public class Station : MonoBehaviour {
     }
 
     [ContextMenu("Test Perform Action")]
-    void TestPerformAction() {
+    protected void TestPerformAction() {
         var subs = new Substance(testSubstanceState);
         StartCoroutine(PerformAction(subs));
 
