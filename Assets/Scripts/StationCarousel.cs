@@ -15,12 +15,14 @@ public class StationCarousel : MonoBehaviour {
 
     public float rotationalVelocity;
 
+    [ContextMenu("TestNext")]
     public void NextStation()
     {
         //stations dont wrap
         if(currentStationIndex < stations.Length) return;
         StartCoroutine(AnimateToCurrentIndex(currentStationIndex + 1));
     }
+    [ContextMenu("TestPrevious")]
     public void PreviousStation()
     {
         if (currentStationIndex > 0) return;
@@ -29,21 +31,21 @@ public class StationCarousel : MonoBehaviour {
     }
     private IEnumerator AnimateToCurrentIndex(int rotateToIndex)
     {
+        //Slide the station your on back onto the carousel.
+        //Rotate to the next station, at rotateToIndex
+        //Slide the new station to the activ
+
         Quaternion startRotation = transform.localRotation;
         var startRotEuler = startRotation.eulerAngles;
         Quaternion finishRotation = Quaternion.EulerAngles(new Vector3(startRotEuler.x, arcPerStation * currentStationIndex, startRotEuler.z));
 
-        yield return null;
+        float startTime = Time.time;
         float totalTime = rotationalVelocity / (arcPerStation * currentStationIndex - rotateToIndex);
-
-            
-/*        
-        while()
+        while(Time.time < startTime + totalTime)
         {
-            transform.rotation = Quaternion.Slerp(Quaternion.Euler(startRotation, target))
+            transform.rotation = Quaternion.Slerp(startRotation, finishRotation, (Time.time / (startTime + totalTime)));
             yield return null;
-
-        }*/ 
+        } 
     }
 
 

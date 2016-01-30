@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 42729195}
   m_Layer: 0
-  m_Name: CurrentStation
+  m_Name: Rotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,7 +257,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -364,6 +364,10 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
   m_PrefabInternal: {fileID: 677555129}
+--- !u!1 &805592334 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
+  m_PrefabInternal: {fileID: 1885070994}
 --- !u!1 &921357802
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +376,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 921357803}
+  - 114: {fileID: 921357804}
   m_Layer: 0
   m_Name: AlchemyStations
   m_TagString: Untagged
@@ -396,6 +401,25 @@ Transform:
   - {fileID: 42729195}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &921357804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 921357802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be7d8276ca64da4999b741e88be0a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stations:
+  - {fileID: 1236796151}
+  - {fileID: 1674463528}
+  - {fileID: 1310148902}
+  - {fileID: 805592334}
+  - {fileID: 2100296394}
+  arcPerStation: 60
+  rotationalVelocity: 10
 --- !u!1001 &1160954743
 Prefab:
   m_ObjectHideFlags: 0
@@ -458,6 +482,14 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
   m_PrefabInternal: {fileID: 1160954743}
+--- !u!1 &1236796151 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
+  m_PrefabInternal: {fileID: 677555129}
+--- !u!1 &1310148902 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
+  m_PrefabInternal: {fileID: 1689308165}
 --- !u!1 &1348847977
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +576,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!1 &1674463528 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
+  m_PrefabInternal: {fileID: 1160954743}
 --- !u!1001 &1689308165
 Prefab:
   m_ObjectHideFlags: 0
@@ -757,3 +793,7 @@ Transform:
   - {fileID: 1160954744}
   m_Father: {fileID: 921357803}
   m_RootOrder: 1
+--- !u!1 &2100296394 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100072, guid: 7cd04d8b903b0b14e941d2385b9e53a1, type: 2}
+  m_PrefabInternal: {fileID: 544340631}
