@@ -129,7 +129,7 @@ MonoBehaviour:
   - {fileID: 985902141}
   timeToReact: 0.5
   timeToPlayFX: 1
-  testSubstanceState: 0
+  testSubstanceState: 1
   measuresBits: 01010101
 --- !u!23 &124459097
 MeshRenderer:
