@@ -14,7 +14,13 @@ public class StationCarousel : MonoBehaviour {
     public int currentStationIndex = 0;
 
     public float rotationalVelocity;
+    public float radiusInTime;
+    public float radiusOutTime;
+    public float carouselRadius;
+    public float activeRadius;
 
+
+    AnimationRunner animator = new AnimationRunner();
 
     void Update()
     {
@@ -27,6 +33,8 @@ public class StationCarousel : MonoBehaviour {
             PreviousStation();
         }
     }
+     
+
 
 
 
@@ -51,33 +59,36 @@ public class StationCarousel : MonoBehaviour {
     {
         if (animating) yield break;
         animating = true;
-        
 
-        //Slide the station your on back onto the carousel.
-        //Rotate to the next station, at rotateToIndex
-        //Slide the new station to the activ
-
-
-
+        //Rotation animation
         Quaternion startRotation = transform.localRotation;
         var startRotEuler = startRotation.eulerAngles;
         Quaternion finishRotation = Quaternion.Euler(new Vector3(startRotEuler.x, -(arcPerStation * rotateToIndex), startRotEuler.z));
-
-        float startTime = Time.time;
         float normalizedTotalTime = (arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / rotationalVelocity;
-        while(Time.time < startTime + normalizedTotalTime)
-        {
-            transform.rotation = Quaternion.Slerp(startRotation, finishRotation, ((Time.time - startTime) / (normalizedTotalTime)));
-            yield return null;
-        }
+        Action<float> Slerp = (t) => {
+            transform.localRotation = Quaternion.Slerp(startRotation, finishRotation, t);
+        };
+
+        yield return StartCoroutine(animator.RunAnimation(radiusOutTime, LerpStationToRadius(carouselRadius)));
+        yield return StartCoroutine(animator.RunAnimation(normalizedTotalTime,Slerp));
         currentStationIndex = rotateToIndex;
+        yield return StartCoroutine(animator.RunAnimation(radiusInTime, LerpStationToRadius(activeRadius)));
+
         animating = false;
     }
 
+    private Action<float> LerpStationToRadius(float endRadius)
+    {
+        var station = stations[currentStationIndex];
+        var startPosition = station.transform.localPosition; 
+        var finalPosition = new Vector3(startPosition.x, startPosition.y, endRadius);
 
-
-
-
-
-
+        var stationToReturn = stations[currentStationIndex];
+        Action<float> ReturnStation = (t) =>
+        {
+            stationToReturn.transform.localPosition = Vector3.Lerp(startPosition, finalPosition, t);
+        };
+        return ReturnStation;
+    }
+    
 }
