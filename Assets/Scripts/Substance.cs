@@ -10,10 +10,13 @@ public enum ActionEnum {
     NOT
 }
 
+
 public class Substance {
     int state;
 
-
+    public Substance(int initialState) {
+        state = initialState;
+    }
 
     public void Combine(ActionEnum action, Substance secondSubstance) {
         switch (action) {
@@ -26,4 +29,7 @@ public class Substance {
         }
     }
 
+    public override string ToString() {
+        return string.Format("Substance({0}, 0b{1})", state, System.Convert.ToString(state, 2));
+    }
 }
