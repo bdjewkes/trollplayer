@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 
-public class ScoreController : MonoBehaviour
+[Serializable]
+public class ScoreController
 {
 	[SerializeField] private NumberScore _numberScore;
-
 	[SerializeField] private GoldScore _goldScore;
+
 	public void ResetScore()
 	{
 		SetScore(0);
@@ -19,6 +21,7 @@ public class ScoreController : MonoBehaviour
 	}
 }
 
+[Serializable]
 public class NumberScore
 {
 	[SerializeField] TextMeshPro text;
@@ -26,10 +29,11 @@ public class NumberScore
 
 	public void SetScore(int score)
 	{
-		text.SetText(score.ToString());
+		text.SetText("Score: " + score);
 	}
 }
 
+[Serializable]
 public class GoldScore
 {
 	[SerializeField] List<GameObject> goldGameObjects;

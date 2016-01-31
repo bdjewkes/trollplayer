@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameMeta : MonoBehaviour
 {
-	[SerializeField] private int _score;
+	private int _score = 0;
 	[SerializeField] private ScoreController _scoreController;
 
 	[SerializeField] private TextMeshPro _timer;
@@ -15,6 +15,7 @@ public class GameMeta : MonoBehaviour
 	// Use this for initialization
 	private void Start()
 	{
+		_scoreController.SetScore(_score);
 		StartCoroutine(countDownTime());
 	}
 
@@ -22,6 +23,7 @@ public class GameMeta : MonoBehaviour
 	//during a game it should be the same
 
 	//TODO: post game scene?
+	[ContextMenu("Add to score")]
 	public void AddToScore()
 	{
 		_score++;
@@ -34,7 +36,7 @@ public class GameMeta : MonoBehaviour
 		var startTimeInMilliseconds = Time.time*1000f;
 		while (Time.time < startTimeInMilliseconds + _totalTimeInSession)
 		{
-			_timer.SetText(string.Format("{0:0.00}", Time.time - startTime));
+			_timer.SetText(string.Format("{0:0.00}s", _totalTimeInSession - (Time.time - startTime)));
 			yield return null;
 		}
 		//TODO: coroutine to celebrate ending
