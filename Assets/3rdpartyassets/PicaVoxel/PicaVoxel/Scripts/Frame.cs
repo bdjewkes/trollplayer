@@ -656,6 +656,7 @@ namespace PicaVoxel
 
         private void GetChunkReferences()
         {
+            if (ParentVolume == null) return;
             if (ParentVolume.RuntimOnlyMesh && !Application.isPlaying) return;
             //Debug.Log("Frame GetChunkReferences");
             chunks =
