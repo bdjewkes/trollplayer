@@ -186,7 +186,7 @@ public class StationCarousel : MonoBehaviour {
         var finalPosition = new Vector3(startPosition.x, startPosition.y, endRadius);
         Action<float> ReturnStation = (t) =>
         {
-            iTween.MoveTo(station.gameObject, iTween.Hash("position", finalPosition, "time", t, "easeType", iTween.EaseType.easeOutQuint, "islocal", true));
+            station.transform.localPosition = Vector3.Lerp(startPosition, finalPosition, t);
         };
         return ReturnStation;
     }
@@ -196,7 +196,6 @@ public class StationCarousel : MonoBehaviour {
     {
         for(int i = 0; i < stations.Length; i++)
         {
-            Debug.Log("Setting index " + i);
             var station = stations[i];
             var rotator = station.transform.parent;
             rotator.localRotation = Quaternion.Euler(new Vector3(rotator.localRotation.x, settings.arcPerStation * i, rotator.localRotation.z));
