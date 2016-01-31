@@ -14,7 +14,7 @@ public enum ActionEnum {
 
 public class Substance {
     int state;
-
+	private int _initialState;
     public int State { get { return state; } }
 
     const int NUM_BITS = 4;
@@ -23,7 +23,13 @@ public class Substance {
 
     public Substance(int initialState) {
         state = initialState;
+	    _initialState = initialState;
     }
+
+	public void ResetState()
+	{
+		state = _initialState;
+	}
 
     public void Combine(ActionEnum action, Substance secondSubstance) {
         switch (action) {

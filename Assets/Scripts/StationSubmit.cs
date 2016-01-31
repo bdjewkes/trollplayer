@@ -34,13 +34,17 @@ public class StationSubmit : Station
 			failureEnding.objectToEnableWhenStatusHappens.SetActive(false);
 			
 		}
-		if(successfulReaction || failureEnding.timesEndingtimeEncounteredBeforeResetting <= 0)
+		if(failureEnding.timesEndingtimeEncounteredBeforeResetting <= 0)
 		{
 			//change the state of the reaction vessel back to zero?
 			//reset game?
 			FindObjectOfType<GameMeta>().ReloadGame();
 		}
-
+		if(successfulReaction)
+		{
+			FindObjectOfType<GameMeta>().AddToScore();
+			substance.ResetState();
+		}
 		ShowReactionFX(false);
 	}
 
