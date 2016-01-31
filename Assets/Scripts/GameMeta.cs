@@ -10,7 +10,7 @@ public class GameMeta : MonoBehaviour
 
 	[SerializeField] private TextMeshPro _timer;
 
-	[SerializeField] private readonly float _totalTimeInSession = 30f;
+	[SerializeField] private readonly float _totalTimeInSession = 90f;
 
 	// Use this for initialization
 	private void Start()
@@ -39,12 +39,12 @@ public class GameMeta : MonoBehaviour
 			_timer.SetText(string.Format("{0:0.00}s", _totalTimeInSession - (Time.time - startTime)));
 			yield return null;
 		}
-		//TODO: coroutine to celebrate ending
+		//TODO: celebrate ending ( coroutine? animation?)
 		ReloadGame();
 	}
 
 	[ContextMenu("Test Reload game")]
-	private void ReloadGame()
+	public void ReloadGame()
 	{
 		for (var i = 0; i < SceneManager.sceneCount; i++)
 		{
