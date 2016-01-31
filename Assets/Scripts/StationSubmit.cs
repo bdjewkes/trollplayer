@@ -25,7 +25,7 @@ public class StationSubmit : Station
             var gold = (GameObject)Instantiate(goldPrefab, transform.position, UnityEngine.Random.rotationUniform);
             gold.GetComponent<Rigidbody>().AddForce(goldForce, ForceMode.VelocityChange);
 
-            var spawned = (GameObject)Instantiate(successEnding.objectToSpawnWhenStatusHappens, transform.position, Quaternion.identity);
+            var spawned = (GameObject)Instantiate(successEnding.objectToSpawnWhenStatusHappens, transform.position + new Vector3(0, 3, 0), Quaternion.identity);
             Destroy(spawned, 1f);
 
             successEnding.soundToPlay.Play();
