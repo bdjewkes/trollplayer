@@ -24,7 +24,6 @@ public class StationCarousel : MonoBehaviour {
     public Transform substanceLocation; // this is where the substance lives while not at a station
     private Substance substance = new Substance(1); // this is the substance, duh
 
-
     //Carousel animation members.
     [SerializeField] private CarouselSettings settings = new CarouselSettings();
     [SerializeField] int currentStationIndex = 0;
@@ -32,8 +31,14 @@ public class StationCarousel : MonoBehaviour {
 
     public bool Locked {get; private set;} //animation lock
 
+    void Awake()
+    {
+        //Enforce the settings.
+        ResetCarousel();
+    }
+    
     //Input timing members
-    private float tapThreshold = 0.15f;
+    private float tapThreshold = 0.25f;
     private float minSwipeMagnitude = 50;
     Vector3 mouseStart;
     private float tapTime;
@@ -50,7 +55,7 @@ public class StationCarousel : MonoBehaviour {
         {
                 
             //Check if its a tap.
-            if(tapTime < tapThreshold)
+            if(tapTime < tapThreshold && move.magnitude <= minSwipeMagnitude)
             {
                 SelectStation(); 
             }
@@ -132,7 +137,7 @@ public class StationCarousel : MonoBehaviour {
         };
         
         //Current station lerps to carousel circumference
-        yield return StartCoroutine(animator.RunAnimation(settings.radiusOutTime, LerpStationToRadius(settings.carouselRadius)));
+        StartCoroutine(animator.RunAnimation(settings.radiusOutTime, LerpStationToRadius(settings.carouselRadius)));
         //Carousel slerps to destination station
         yield return StartCoroutine(animator.RunAnimation(normalizedTotalTime,Slerp));
         currentStationIndex = rotateToIndex;
