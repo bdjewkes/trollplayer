@@ -20,9 +20,13 @@ public class CarouselSettings
 
 public class StationCarousel : MonoBehaviour {
     public Station[] stations;
+    public GameObject substanceObject; //an object to represent the substance.
+    private Substance substance = new Substance(1); // this is the substance, duh
+
+
     //Carousel animation members.
     [SerializeField] private CarouselSettings settings = new CarouselSettings();
-    private Substance substance = new Substance(1); // this is the substance, duh
+    
     private int currentStationIndex = 0;
     private AnimationRunner animator = new AnimationRunner();
 
