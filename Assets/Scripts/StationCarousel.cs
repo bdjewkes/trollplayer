@@ -24,6 +24,7 @@ public class StationCarousel : MonoBehaviour {
     public Transform substanceLocation; // this is where the substance lives while not at a station
     private Substance substance = new Substance(1); // this is the substance, duh
 
+    public HumourDisplay vesselHumourDisplay;
 
     //Carousel animation members.
     [SerializeField] private CarouselSettings settings = new CarouselSettings();
@@ -155,6 +156,9 @@ public class StationCarousel : MonoBehaviour {
         }));
         //Do the thing.
 		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
+
+        UpdateVesselArt();
+
         //Animate out of position.
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
@@ -165,7 +169,9 @@ public class StationCarousel : MonoBehaviour {
         Locked = false;
     }
 
-
+    void UpdateVesselArt() {
+        vesselHumourDisplay.DisplaySubstance(substance);
+    }
 
     private Action<float> LerpStationToRadius(float endRadius)
     {
