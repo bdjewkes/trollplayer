@@ -21,13 +21,13 @@ public class CarouselSettings
 public class StationCarousel : MonoBehaviour {
     public Station[] stations;
     public GameObject substanceObject; //an object to represent the substance.
+    public Transform substanceLocation; // this is where the substance lives while not at a station
     private Substance substance = new Substance(1); // this is the substance, duh
 
 
     //Carousel animation members.
     [SerializeField] private CarouselSettings settings = new CarouselSettings();
-    
-    private int currentStationIndex = 0;
+    [SerializeField] int currentStationIndex = 0;
     private AnimationRunner animator = new AnimationRunner();
 
     public bool Locked {get; private set;} //animation lock
@@ -146,11 +146,20 @@ public class StationCarousel : MonoBehaviour {
         if (Locked) yield break;
         Locked = true;
 
-
+        var station = stations[currentStationIndex];
         //Animate into position.
+        var startPosition = substanceLocation.transform.position;
+        yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
+        {
+            substanceObject.transform.localPosition = Vector3.Lerp(startPosition, station.transform.position, t);
+        }));
         //Do the thing.
-        stations[currentStationIndex].PerformAction(substance);
+        yield return StartCoroutine(station.PerformAction(substance));
         //Animate out of position.
+        yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
+        {
+            substanceObject.transform.localPosition = Vector3.Lerp(station.transform.position, substanceLocation.position, t);
+        })); ;
 
 
         Locked = false;
