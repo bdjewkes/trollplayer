@@ -49,7 +49,7 @@ public class StationSubmit : Station
 			//change the state of the reaction vessel back to zero?
 			//reset game?
 
-			FindObjectOfType<GameMeta>().gameIsDone = true;
+			FindObjectOfType<GameMeta>().RoundFinishedDueToFailure();
 		}
 		if(successfulReaction)
 		{

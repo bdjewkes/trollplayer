@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class GameMeta : MonoBehaviour
 {
-	[SerializeField] private readonly float _totalTimeInSession = 120f;
+	[Serializable]
+	public class RoundDescription
+	{
+		public int targetGold;
+		public float RoundTime;
+	}
+
+	private RoundDescription[] _roundsDescriptions = null;
+	[SerializeField] private float _totalTimeInSession = 120f;
 	private int _score;
 	[SerializeField] private ScoreController _scoreController;
 
@@ -14,6 +23,15 @@ public class GameMeta : MonoBehaviour
 	// Use this for initialization
 	private void Start()
 	{
+		if(_roundsDescriptions == null)
+		{
+			_roundsDescriptions = new RoundDescription[]
+			{
+				new RoundDescription() { targetGold = 1,RoundTime = 90f},
+				new RoundDescription() { targetGold = 3,RoundTime = 60f},
+				new RoundDescription() { targetGold = 5,RoundTime = 30f },
+			};
+        }
 		_scoreController.SetScore(0);
 		StartCoroutine(countDownTime());
 	}
@@ -29,21 +47,43 @@ public class GameMeta : MonoBehaviour
 		_scoreController.SetScore(_score);
 	}
 
+	public void RoundFinishedDueToFailure()
+	{
+		_roundFailed = true;
+	}
+
+	private bool _roundFailed = false;
 	private IEnumerator countDownTime()
 	{
-		var timeLeft = _totalTimeInSession;
-		while (timeLeft > 0)
+		foreach (var roundDescription in _roundsDescriptions)
+		{
+			yield return StartCoroutine(handleRound(roundDescription));
+		}
+
+		//TODO: celebrate ending ( coroutine? animation?)
+		gameIsDone = true;
+		//FindObjectOfType<AdditiveLoad>().ReloadGame();
+	}
+
+	private IEnumerator handleRound(RoundDescription round)
+	{
+		_roundFailed = false;
+		var timeLeft = round.RoundTime;
+		while(timeLeft > 0 && !_roundFailed)
 		{
 			_timer.SetText(string.Format("{0:0.00}s", timeLeft));
 			yield return null;
 
 			timeLeft -= Time.deltaTime;
 		}
-		Debug.Log("timer done, ending game");
-		//TODO: celebrate ending ( coroutine? animation?)
-		gameIsDone = true;
-		//FindObjectOfType<AdditiveLoad>().ReloadGame();
+		if(timeLeft <= 0)
+			Debug.Log("timer done, ending round");
+		if(_roundFailed)
+			Debug.Log("round failed, ending round");
 	}
+
+
+
 
 
 	//TAP TO CONTINUE
