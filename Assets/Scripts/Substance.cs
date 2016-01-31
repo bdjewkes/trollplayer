@@ -11,9 +11,9 @@ public enum ActionEnum {
     NOP
 }
 
-
+[System.Serializable]
 public class Substance {
-    int state;
+    public int state;
 	private int _initialState;
     public int State { get { return state; } }
 
@@ -24,6 +24,10 @@ public class Substance {
     public Substance(int initialState) {
         state = initialState;
 	    _initialState = initialState;
+    }
+
+    public void Clear() {
+        state = 0;
     }
 
 	public void ResetState()
