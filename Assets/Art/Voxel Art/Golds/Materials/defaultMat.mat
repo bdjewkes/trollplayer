@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 3dab48fd2aef2274898c32802a906258, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -93,6 +93,10 @@ Material:
         second: 0.5
       data:
         first:
+          name: _Metallic
+        second: 0.43
+      data:
+        first:
           name: _Parallax
         second: 0.02
       data:
@@ -123,15 +127,11 @@ Material:
         first:
           name: _Mode
         second: 0
-      data:
-        first:
-          name: _Metallic
-        second: 0.43
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0.08088237, g: 0.08088237, b: 0.08088237, a: 1}
+        second: {r: 0.09558821, g: 0.09558821, b: 0.09558821, a: 1}
       data:
         first:
           name: _Color
