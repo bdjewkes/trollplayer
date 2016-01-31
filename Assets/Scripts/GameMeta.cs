@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameMeta : MonoBehaviour
 {
-	private int _score = 0;
+	[SerializeField] private readonly float _totalTimeInSession = 120f;
+	private int _score;
 	[SerializeField] private ScoreController _scoreController;
 
 	[SerializeField] private TextMeshPro _timer;
-
-	[SerializeField] private readonly float _totalTimeInSession = 120f;
+	public bool gameIsDone;
 
 	// Use this for initialization
 	private void Start()
@@ -42,9 +41,10 @@ public class GameMeta : MonoBehaviour
 		}
 		Debug.Log("timer done, ending game");
 		//TODO: celebrate ending ( coroutine? animation?)
-		FindObjectOfType<AdditiveLoad>().ReloadGame();
+		gameIsDone = true;
+		//FindObjectOfType<AdditiveLoad>().ReloadGame();
 	}
 
-	
+
 	//TAP TO CONTINUE
 }
