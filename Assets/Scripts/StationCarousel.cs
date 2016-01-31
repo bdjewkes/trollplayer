@@ -7,43 +7,68 @@ using Rand = UnityEngine.Random;
 using Obj = UnityEngine.Object;
 
 public class StationCarousel : MonoBehaviour {
+    public Substance substance; // this is the substance, duh
 
-    //we'll change this to an array of 'Stations'
-    public GameObject[] stations;
+
+    public Station[] stations;
     public float arcPerStation;
     public int currentStationIndex = 0;
 
+    //Carousel animation members.
     public float rotationalVelocity;
     public float radiusInTime;
     public float radiusOutTime;
     public float carouselRadius;
     public float activeRadius;
-
-
     AnimationRunner animator = new AnimationRunner();
 
-    public float minSwipeThreshold = 50;
+    //Input timing members
+    private float tapThreshold = 0.25f;
+    private float minSwipeMagnitude = 50;
     Vector3 mouseStart;
+    private float tapTime;
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) mouseStart = Input.mousePosition;
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
+        tapTime += Time.deltaTime;
+        Vector3 move = Input.mousePosition - mouseStart;
+            
+        if (Input.GetMouseButtonDown(0)) {
+            mouseStart = Input.mousePosition;
+            tapTime = 0;
+        }
+        else if (Input.GetMouseButtonUp(0))
         {
-            Vector3 move = Input.mousePosition - mouseStart;
-            if (Input.GetMouseButtonUp(0) 
-                && move.magnitude > minSwipeThreshold 
-                && (Mathf.Abs(move.x) > Mathf.Abs(move.y)))
+                
+            //Check if its a tap.
+            if(tapTime < tapThreshold)
             {
-                if (move.x > 0)
+                SelectStation(); 
+            }
+            //Check if its a swipe
+            else if(move.magnitude > minSwipeMagnitude)
+            {
+                //Horizontal swipe:
+                if (Mathf.Abs(move.x) > Mathf.Abs(move.y))
                 {
-                    NextStation();
+                    if (move.x > 0)
+                    {
+                        NextStation();
+                    }
+                    else
+                    {
+                        PreviousStation();
+                    }
                 }
+                //Vertical swipe:
                 else
                 {
-                    PreviousStation();
-                }
+                    if (move.y > 0)
+                    {
+                        JumpToMeasureStation();//Swipe up;
+                    }
+                    else { JumpToReturnIndex(); } 
+                } 
             }
-
         }
     }
 
@@ -52,18 +77,33 @@ public class StationCarousel : MonoBehaviour {
     {
         //stations dont wrap
         if(currentStationIndex >= stations.Length - 1) return;
-        StartCoroutine(AnimateToCurrentIndex(currentStationIndex + 1));
+        returnToIndex = currentStationIndex;
+        StartCoroutine(AnimateToIndex(currentStationIndex + 1));
     }
     [ContextMenu("TestPrevious")]
     private void PreviousStation()
     {
         if (currentStationIndex < 1) return;
-        StartCoroutine(AnimateToCurrentIndex(currentStationIndex - 1));
-
+        returnToIndex = currentStationIndex;
+        StartCoroutine(AnimateToIndex(currentStationIndex - 1));
     }
 
-
-
+    private int returnToIndex;
+    private void JumpToMeasureStation()
+    {
+        //Measure index is implemented as a magic number...
+        var measureIndex = stations.Length - 2;
+        if(currentStationIndex != measureIndex) returnToIndex = currentStationIndex;
+        StartCoroutine(AnimateToIndex(measureIndex));
+    }
+    private void JumpToReturnIndex()
+    {
+        StartCoroutine(AnimateToIndex(returnToIndex));
+    }
+    private void SelectStation()
+    {
+        StartCoroutine(AnimateSelect());
+    }
 
     private Quaternion GetStationRotation(int index)
     {
@@ -71,38 +111,54 @@ public class StationCarousel : MonoBehaviour {
     }
             
     private bool animating; //animation lock
-    private IEnumerator AnimateToCurrentIndex(int rotateToIndex)
+    private IEnumerator AnimateToIndex(int rotateToIndex)
     {
         if (animating) yield break;
         animating = true;
 
         //Rotation animation
-        Quaternion startRotation = transform.localRotation;
-        var startRotEuler = startRotation.eulerAngles;
         Quaternion finishRotation = GetStationRotation(rotateToIndex);
         float normalizedTotalTime = (arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / rotationalVelocity;
         Action<float> Slerp = (t) => {
             iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeOutBounce, "time", t));
         };
-
+        
+        //Current station lerps to carousel circumference
         yield return StartCoroutine(animator.RunAnimation(radiusOutTime, LerpStationToRadius(carouselRadius)));
+        //Carousel slerps to destination station
         yield return StartCoroutine(animator.RunAnimation(normalizedTotalTime,Slerp));
         currentStationIndex = rotateToIndex;
+        //New station lerps to active distance
         yield return StartCoroutine(animator.RunAnimation(radiusInTime, LerpStationToRadius(activeRadius)));
 
         animating = false;
     }
+
+    private IEnumerator AnimateSelect()
+    {
+        if (animating) yield break;
+        animating = true;
+
+
+        //Animate into position.
+        //Do the thing.
+        stations[currentStationIndex].PerformAction(substance);
+        //Animate out of position.
+
+
+        animating = false;
+    }
+
+
 
     private Action<float> LerpStationToRadius(float endRadius)
     {
         var station = stations[currentStationIndex];
         var startPosition = station.transform.localPosition; 
         var finalPosition = new Vector3(startPosition.x, startPosition.y, endRadius);
-
-        var stationToReturn = stations[currentStationIndex];
         Action<float> ReturnStation = (t) =>
         {
-            iTween.MoveTo(station, iTween.Hash("position", finalPosition, "time", t, "easeType", iTween.EaseType.easeInOutBounce, "islocal", true));
+            iTween.MoveTo(station.gameObject, iTween.Hash("position", finalPosition, "time", t, "easeType", iTween.EaseType.easeInOutBounce, "islocal", true));
         };
         return ReturnStation;
     }
@@ -120,7 +176,5 @@ public class StationCarousel : MonoBehaviour {
         }
         stations[currentStationIndex].transform.localPosition = new Vector3(0, 0, activeRadius);
         transform.localRotation = GetStationRotation(currentStationIndex);
-        
     }
-    
 }
