@@ -121,11 +121,13 @@ MonoBehaviour:
   constant: 2
   FX:
   - {fileID: 19830730}
+  Animations: []
   MeasurementFX: []
   timeToReact: 1
   timeToPlayFX: 1
   measuresBits: 00000000
   testSubstanceState: 0
+  substanceLocation: {fileID: 124318}
 --- !u!198 &19830730
 ParticleSystem:
   m_ObjectHideFlags: 1

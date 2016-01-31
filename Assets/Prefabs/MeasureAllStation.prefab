@@ -452,6 +452,7 @@ MonoBehaviour:
   action: 6
   constant: 1
   FX: []
+  Animations: []
   MeasurementFX:
   - {fileID: 193238}
   - {fileID: 102626}
@@ -461,6 +462,7 @@ MonoBehaviour:
   timeToPlayFX: 1
   measuresBits: 01010101
   testSubstanceState: 1
+  substanceLocation: {fileID: 154644}
 --- !u!114 &11443032
 MonoBehaviour:
   m_ObjectHideFlags: 1
