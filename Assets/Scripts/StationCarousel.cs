@@ -24,6 +24,8 @@ public class StationCarousel : MonoBehaviour {
     public Transform substanceLocation; // this is where the substance lives while not at a station
     private Substance substance = new Substance(1); // this is the substance, duh
 
+    public HumourDisplay vesselHumourDisplay;
+
     //Carousel animation members.
     [SerializeField] private CarouselSettings settings = new CarouselSettings();
     [SerializeField] int currentStationIndex = 0;
@@ -35,6 +37,8 @@ public class StationCarousel : MonoBehaviour {
     {
         //Enforce the settings.
         ResetCarousel();
+
+        vesselHumourDisplay.DisplaySubstance(substance);
     }
     
     //Input timing members
@@ -133,7 +137,7 @@ public class StationCarousel : MonoBehaviour {
         Quaternion finishRotation = GetStationRotation(rotateToIndex);
         float normalizedTotalTime = (settings.arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / settings.rotationalVelocity;
         Action<float> Slerp = (t) => {
-            iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeInOutBack, "time", t));
+            iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeInOutSine, "time", t));
         };
         
         //Current station lerps to carousel circumference
@@ -153,24 +157,30 @@ public class StationCarousel : MonoBehaviour {
 
         var station = stations[currentStationIndex];
         //Animate into position.
-        var startPosition = substanceLocation.transform.position;
+        /*var startPosition = substanceLocation.transform.position;
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
             substanceObject.transform.localPosition = Vector3.Lerp(startPosition, station.substanceLocation.transform.position, t);
-        }));
+        }));*/
         //Do the thing.
 		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
+
+        UpdateVesselArt();
+
         //Animate out of position.
+        /*
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
             substanceObject.transform.localPosition = Vector3.Lerp(station.substanceLocation.transform.position, substanceLocation.position, t);
         })); ;
-
+        */
 
         Locked = false;
     }
 
-
+    void UpdateVesselArt() {
+        vesselHumourDisplay.DisplaySubstance(substance);
+    }
 
     private Action<float> LerpStationToRadius(float endRadius)
     {
@@ -179,7 +189,7 @@ public class StationCarousel : MonoBehaviour {
         var finalPosition = new Vector3(startPosition.x, startPosition.y, endRadius);
         Action<float> ReturnStation = (t) =>
         {
-            iTween.MoveTo(station.gameObject, iTween.Hash("position", finalPosition, "time", t, "easeType", iTween.EaseType.easeOutBack, "islocal", true));
+            iTween.MoveTo(station.gameObject, iTween.Hash("position", finalPosition, "time", t, "easeType", iTween.EaseType.easeOutQuint, "islocal", true));
         };
         return ReturnStation;
     }
