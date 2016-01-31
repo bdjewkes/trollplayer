@@ -6,7 +6,8 @@ public class Station : MonoBehaviour {
     public ActionEnum action;
     public int constant;
 
-    public ParticleSystem[] FX;
+    public GameObject[] FXPrefabs;
+    public float[] FXDelays;
 
     public Animator[] Animations;
 
@@ -28,11 +29,21 @@ public class Station : MonoBehaviour {
     }
 
     protected void ShowReactionFX(bool show) {
-        foreach (var particle in FX) {
-            var em = particle.emission;
-            em.enabled = show;
+        if (show) {
+            for (int i = 0; i < FXPrefabs.Length; i++) {
+                var prefab = FXPrefabs[i];
+                var delay = 0f;
+                if (FXDelays.Length > i) {
+                    delay = FXDelays[i];
+                }
+                this.Delay(delay, () => {
+                    var spawned = (GameObject)Instantiate(prefab, prefab.transform.position, prefab.transform.rotation);
+                    spawned.transform.SetParent(transform, false);
+                    Destroy(spawned, 2);
+                });
+            }
         }
-
+        
         if (show) {
             foreach (var anim in Animations) {
                 if (anim == null) continue;
