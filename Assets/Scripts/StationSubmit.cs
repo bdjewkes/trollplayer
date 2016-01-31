@@ -31,7 +31,9 @@ public class StationSubmit : Station
 		} else
 		{
 			failureEnding.timesEndingtimeEncounteredBeforeResetting--;
-			//failureEnding.objectToSpawnWhenStatusHappens.SetActive(true);
+
+            var spawned = (GameObject)Instantiate(failureEnding.objectToSpawnWhenStatusHappens, transform.position + failureEnding.objectToSpawnWhenStatusHappens.transform.position, Quaternion.identity);
+            Destroy(spawned, 1f);
 		}
 			
 
@@ -50,7 +52,8 @@ public class StationSubmit : Station
 		}
 		if(successfulReaction)
 		{
-			FindObjectOfType<GameMeta>().AddToScore();
+			var meta = FindObjectOfType<GameMeta>();
+            if(meta != null) meta.AddToScore();
 			substance.ResetState();
 		}
 		ShowReactionFX(false);

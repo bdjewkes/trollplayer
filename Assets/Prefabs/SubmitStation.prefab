@@ -101,10 +101,14 @@ MonoBehaviour:
   goldPrefab: {fileID: 154968, guid: 43ab157d8754d4d4685ff60e9f8553dd, type: 2}
   goldForce: {x: 0, y: 8, z: -2}
   successEnding:
-    objectToEnableWhenStatusHappens: {fileID: 0}
+    objectToSpawnWhenStatusHappens: {fileID: 187564, guid: f5a392856203eab4684ae41f85dab11f,
+      type: 2}
+    soundToPlay: {fileID: 0}
     timesEndingtimeEncounteredBeforeResetting: 1
   failureEnding:
-    objectToEnableWhenStatusHappens: {fileID: 0}
+    objectToSpawnWhenStatusHappens: {fileID: 164408, guid: 5988f7755cf35ea47ab047ba027cf36e,
+      type: 2}
+    soundToPlay: {fileID: 0}
     timesEndingtimeEncounteredBeforeResetting: 3
 --- !u!1001 &100100000
 Prefab:
