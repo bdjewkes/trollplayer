@@ -145,7 +145,7 @@ public class StationCarousel : MonoBehaviour {
 
         //Animate into position.
         //Do the thing.
-        stations[currentStationIndex].PerformAction(substance);
+		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
         //Animate out of position.
 
 
