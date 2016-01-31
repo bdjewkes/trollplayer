@@ -20,6 +20,8 @@ public class Station : MonoBehaviour {
     [SerializeField]
     protected int testSubstanceState;
 
+    public GameObject substanceLocation;
+
     protected virtual void Awake() {
         ShowReactionFX(false);
         TurnOffMeasurementFX();
