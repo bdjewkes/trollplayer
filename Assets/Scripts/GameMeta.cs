@@ -10,7 +10,7 @@ public class GameMeta : MonoBehaviour
 
 	[SerializeField] private TextMeshPro _timer;
 
-	[SerializeField] private readonly float _totalTimeInSession = 30f;
+	[SerializeField] private readonly float _totalTimeInSession = 90f;
 
 	// Use this for initialization
 	private void Start()
