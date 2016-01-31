@@ -8,6 +8,8 @@ public class Station : MonoBehaviour {
 
     public ParticleSystem[] FX;
 
+    public Animator[] Animations;
+
     public GameObject[] MeasurementFX;
 
     public float timeToReact = 0.5f;
@@ -28,6 +30,13 @@ public class Station : MonoBehaviour {
             var em = particle.emission;
             em.enabled = show;
         }
+
+        if (show) {
+            foreach (var anim in Animations) {
+                if (anim == null) continue;
+                anim.SetTrigger("Activate");
+            }
+        }
     }
 
     protected void TurnOffMeasurementFX() {
@@ -39,10 +48,7 @@ public class Station : MonoBehaviour {
     public virtual IEnumerator PerformAction(Substance substance) {
         yield return new WaitForSeconds(timeToReact);
 
-        foreach (var particle in FX) {
-            var em = particle.emission;
-            em.enabled = true;
-        }
+        ShowReactionFX(true);
 
         substance.Combine(action, new Substance(constant));
 
