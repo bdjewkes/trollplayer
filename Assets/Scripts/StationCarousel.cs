@@ -22,14 +22,25 @@ public class StationCarousel : MonoBehaviour {
 
     AnimationRunner animator = new AnimationRunner();
 
-    private void Update()
+    public float minSwipeThreshold; 
+    Vector3 lastMouse;
+    void Update()
     {
-        bool direction = false;
-        if (Input.GetMouseButtonUp(0) && SwipeInput.GetSwipeDirection(ref direction))
+        var move = lastMouse - Input.mousePosition;
+        //Only swipe if the threshold has been overcome, and it is mostly in the 
+        //x direction.
+        if (move.magnitude > minSwipeThreshold && (Mathf.Abs(move.x) > Mathf.Abs(move.y)))
         {
-            if (direction) NextStation();
-            else PreviousStation();
+            if (move.x > 0)
+            {
+                NextStation();
+            }
+            else
+            {
+                PreviousStation();
+            }
         }
+        lastMouse = Input.mousePosition;
     }
 
     [ContextMenu("TestNext")]
@@ -59,13 +70,11 @@ public class StationCarousel : MonoBehaviour {
         Quaternion finishRotation = Quaternion.Euler(new Vector3(startRotEuler.x, -(arcPerStation * rotateToIndex), startRotEuler.z));
         float normalizedTotalTime = (arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / rotationalVelocity;
         Action<float> Slerp = (t) => {
-            iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeOutBounce, "time", t));
+            transform.localRotation = Quaternion.Slerp(startRotation, finishRotation, t);
         };
 
         yield return StartCoroutine(animator.RunAnimation(radiusOutTime, LerpStationToRadius(carouselRadius)));
         yield return StartCoroutine(animator.RunAnimation(normalizedTotalTime,Slerp));
-
-
         currentStationIndex = rotateToIndex;
         yield return StartCoroutine(animator.RunAnimation(radiusInTime, LerpStationToRadius(activeRadius)));
 
@@ -78,9 +87,10 @@ public class StationCarousel : MonoBehaviour {
         var startPosition = station.transform.localPosition; 
         var finalPosition = new Vector3(startPosition.x, startPosition.y, endRadius);
 
+        var stationToReturn = stations[currentStationIndex];
         Action<float> ReturnStation = (t) =>
         {
-            iTween.MoveTo(station, iTween.Hash("position",finalPosition,"time",t,"easeType",iTween.EaseType.easeInOutBounce,"islocal",true));
+            stationToReturn.transform.localPosition = Vector3.Lerp(startPosition, finalPosition, t);
         };
         return ReturnStation;
     }
