@@ -128,7 +128,7 @@ public class StationCarousel : MonoBehaviour {
         Quaternion finishRotation = GetStationRotation(rotateToIndex);
         float normalizedTotalTime = (settings.arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / settings.rotationalVelocity;
         Action<float> Slerp = (t) => {
-            iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeOutBounce, "time", t));
+            iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeInOutBack, "time", t));
         };
         
         //Current station lerps to carousel circumference
@@ -174,7 +174,7 @@ public class StationCarousel : MonoBehaviour {
         var finalPosition = new Vector3(startPosition.x, startPosition.y, endRadius);
         Action<float> ReturnStation = (t) =>
         {
-            iTween.MoveTo(station.gameObject, iTween.Hash("position", finalPosition, "time", t, "easeType", iTween.EaseType.easeInOutBounce, "islocal", true));
+            iTween.MoveTo(station.gameObject, iTween.Hash("position", finalPosition, "time", t, "easeType", iTween.EaseType.easeOutBack, "islocal", true));
         };
         return ReturnStation;
     }
