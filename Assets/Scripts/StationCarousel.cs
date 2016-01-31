@@ -11,7 +11,7 @@ public class StationCarousel : MonoBehaviour {
     //we'll change this to an array of 'Stations'
     public GameObject[] stations;
     public float arcPerStation;
-    private int currentStationIndex = 0;
+    public int currentStationIndex = 0;
 
     public float rotationalVelocity;
     public float radiusInTime;
@@ -23,7 +23,6 @@ public class StationCarousel : MonoBehaviour {
     AnimationRunner animator = new AnimationRunner();
 
     public float minSwipeThreshold = 50;
-    bool swipeThresholdCrossed = false;
     Vector3 mouseStart;
     void Update()
     {
@@ -63,6 +62,14 @@ public class StationCarousel : MonoBehaviour {
 
     }
 
+
+
+
+    private Quaternion GetStationRotation(int index)
+    {
+            return Quaternion.Euler(new Vector3(transform.localRotation.x, -arcPerStation * index, transform.localRotation.z));
+    }
+            
     private bool animating; //animation lock
     private IEnumerator AnimateToCurrentIndex(int rotateToIndex)
     {
@@ -72,7 +79,7 @@ public class StationCarousel : MonoBehaviour {
         //Rotation animation
         Quaternion startRotation = transform.localRotation;
         var startRotEuler = startRotation.eulerAngles;
-        Quaternion finishRotation = Quaternion.Euler(new Vector3(startRotEuler.x, -(arcPerStation * rotateToIndex), startRotEuler.z));
+        Quaternion finishRotation = GetStationRotation(rotateToIndex);
         float normalizedTotalTime = (arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / rotationalVelocity;
         Action<float> Slerp = (t) => {
             iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeOutBounce, "time", t));
@@ -99,11 +106,21 @@ public class StationCarousel : MonoBehaviour {
         };
         return ReturnStation;
     }
-
+    
+    [ContextMenu("Reset")]
     private void ResetCarousel()
     {
-
+        for(int i = 0; i < stations.Length; i++)
+        {
+            Debug.Log("Setting index " + i);
+            var station = stations[i];
+            var rotator = station.transform.parent;
+            rotator.localRotation = Quaternion.Euler(new Vector3(rotator.localRotation.x, arcPerStation * i, rotator.localRotation.z));
+            station.transform.localPosition = new Vector3(0, 0, carouselRadius);
+        }
+        stations[currentStationIndex].transform.localPosition = new Vector3(0, 0, activeRadius);
+        transform.localRotation = GetStationRotation(currentStationIndex);
+        
     }
-
     
 }
