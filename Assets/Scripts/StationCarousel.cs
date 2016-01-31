@@ -11,7 +11,7 @@ public class StationCarousel : MonoBehaviour {
     //we'll change this to an array of 'Stations'
     public GameObject[] stations;
     public float arcPerStation;
-    public int currentStationIndex = 0;
+    private int currentStationIndex = 0;
 
     public float rotationalVelocity;
     public float radiusInTime;
@@ -22,34 +22,27 @@ public class StationCarousel : MonoBehaviour {
 
     AnimationRunner animator = new AnimationRunner();
 
-    void Update()
+    private void Update()
     {
-        if(Input.GetMouseButtonUp(0))
+        bool direction = false;
+        if (Input.GetMouseButtonUp(0) && SwipeInput.GetSwipeDirection(ref direction))
         {
-            NextStation();
-        }
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            PreviousStation();
+            if (direction) NextStation();
+            else PreviousStation();
         }
     }
-     
-
-
-
-
 
     [ContextMenu("TestNext")]
-    public void NextStation()
+    private void NextStation()
     {
         //stations dont wrap
         if(currentStationIndex >= stations.Length - 1) return;
         StartCoroutine(AnimateToCurrentIndex(currentStationIndex + 1));
     }
     [ContextMenu("TestPrevious")]
-    public void PreviousStation()
+    private void PreviousStation()
     {
-        if (currentStationIndex < 0) return;
+        if (currentStationIndex < 1) return;
         StartCoroutine(AnimateToCurrentIndex(currentStationIndex - 1));
 
     }
