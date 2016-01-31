@@ -1203,7 +1203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1427411678
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 0
+  checkPaddingRequired: 1
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -1296,8 +1296,8 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_havePropertiesChanged: 0
-  m_isInputParsingRequired: 0
+  m_havePropertiesChanged: 1
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -1756,15 +1756,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: '6) -
+  m_text: '6) +
 
-    7) ^
-
-    8) +
-
-    9) +
-
-    10) -
+    7) !
 
 '
   m_fontAsset: {fileID: 11400000, guid: 316f956b856b45c448987b5018ec3ef4, type: 2}
