@@ -17,9 +17,9 @@ public class Substance {
 	private int _initialState;
     public int State { get { return state; } }
 
-    const int NUM_BITS = 4;
+    public const int NUM_BITS = 4;
 
-    const int STATE_MASK = 0xF;
+    public const int STATE_MASK = 0xF;
 
     public Substance(int initialState) {
         state = initialState;
