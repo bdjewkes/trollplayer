@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class StationSubmit : Station
 {
+    public GameObject goldPrefab;
+    public Vector3 goldForce = new Vector3(0, 100, -1);
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -19,11 +22,18 @@ public class StationSubmit : Station
 		if(successfulReaction)
 		{
 			Jot.Out("Submission successful!");
-			successEnding.objectToEnableWhenStatusHappens.SetActive(true);
+			//successEnding.objectToEnableWhenStatusHappens.SetActive(true);
+            var gold = (GameObject)Instantiate(goldPrefab, transform.position, UnityEngine.Random.rotationUniform);
+            gold.GetComponent<Rigidbody>().AddForce(goldForce, ForceMode.VelocityChange);
+
+            var spawned = (GameObject)Instantiate(successEnding.objectToSpawnWhenStatusHappens, transform.position, Quaternion.identity);
+            Destroy(spawned, 1f);
 		} else
 		{
 			failureEnding.timesEndingtimeEncounteredBeforeResetting--;
-			failureEnding.objectToEnableWhenStatusHappens.SetActive(true);
+
+            var spawned = (GameObject)Instantiate(failureEnding.objectToSpawnWhenStatusHappens, transform.position + failureEnding.objectToSpawnWhenStatusHappens.transform.position, Quaternion.identity);
+            Destroy(spawned, 1f);
 		}
 			
 
@@ -31,7 +41,7 @@ public class StationSubmit : Station
 
 		if(!successfulReaction)
 		{
-			failureEnding.objectToEnableWhenStatusHappens.SetActive(false);
+			//failureEnding.objectToSpawnWhenStatusHappens.SetActive(false);
 			
 		}
 		if(failureEnding.timesEndingtimeEncounteredBeforeResetting <= 0)
@@ -43,7 +53,8 @@ public class StationSubmit : Station
 		}
 		if(successfulReaction)
 		{
-			FindObjectOfType<GameMeta>().AddToScore();
+			var meta = FindObjectOfType<GameMeta>();
+            if(meta != null) meta.AddToScore();
 			substance.ResetState();
 		}
 		ShowReactionFX(false);
@@ -59,9 +70,8 @@ public class StationSubmit : Station
 	[Serializable]
 	public class EndingSequence
 	{
-		public GameObject objectToEnableWhenStatusHappens;
-		//public Particle successParticle;
-		//public AudioSource soundToPlay;
+		public GameObject objectToSpawnWhenStatusHappens;
+		public AudioSource soundToPlay;
 		public int timesEndingtimeEncounteredBeforeResetting = 1;
 	}
 
