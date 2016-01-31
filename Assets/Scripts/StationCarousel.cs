@@ -20,8 +20,6 @@ public class CarouselSettings
 
 public class StationCarousel : MonoBehaviour {
     public Station[] stations;
-    public GameObject substanceObject; //an object to represent the substance.
-    public Transform substanceLocation; // this is where the substance lives while not at a station
     private Substance substance = new Substance(1); // this is the substance, duh
 
     public HumourDisplay vesselHumourDisplay;
@@ -31,13 +29,24 @@ public class StationCarousel : MonoBehaviour {
     [SerializeField] int currentStationIndex = 0;
     private AnimationRunner animator = new AnimationRunner();
 
-    public bool Locked {get; private set;} //animation lock
+
+    /// <summary>
+    /// You should only be able to perform an action on a station
+    /// if it is the OUT position; ie, no carousel animation is in progress.
+    /// </summary>
+    public bool StationActionLocked {get; private set;} //animation lock
+    /// <summary>
+    /// You should be able to scroll at any time, EXCEPT if the station action
+    /// is locked.
+    /// </summary>
+    public bool ScrollLocked { get; private set; }
 
     void Awake()
     {
         //Enforce the settings.
         ResetCarousel();
-
+        StationActionLocked = false;
+        ScrollLocked = false;
         vesselHumourDisplay.DisplaySubstance(substance);
     }
     
@@ -111,7 +120,7 @@ public class StationCarousel : MonoBehaviour {
     private void JumpToMeasureStation()
     {
         //Measure index is implemented as a magic number...
-        var measureIndex = stations.Length - 2;
+        var measureIndex = stations.Length - 1;
         if(currentStationIndex != measureIndex) returnToIndex = currentStationIndex;
         StartCoroutine(AnimateToIndex(measureIndex));
     }
@@ -130,9 +139,9 @@ public class StationCarousel : MonoBehaviour {
     }
     private IEnumerator AnimateToIndex(int rotateToIndex)
     {
-        if (Locked) yield break;
-        Locked = true;
-
+        if (StationActionLocked) yield break;
+        StationActionLocked = true;
+        
         //Rotation animation
         Quaternion finishRotation = GetStationRotation(rotateToIndex);
         float normalizedTotalTime = (settings.arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / settings.rotationalVelocity;
@@ -143,39 +152,27 @@ public class StationCarousel : MonoBehaviour {
         //Current station lerps to carousel circumference
         StartCoroutine(animator.RunAnimation(settings.radiusOutTime, LerpStationToRadius(settings.carouselRadius)));
         //Carousel slerps to destination station
+        ScrollLocked = true;
         yield return StartCoroutine(animator.RunAnimation(normalizedTotalTime,Slerp));
+        ScrollLocked = false;
         currentStationIndex = rotateToIndex;
         //New station lerps to active distance
         yield return StartCoroutine(animator.RunAnimation(settings.radiusInTime, LerpStationToRadius(settings.activeRadius)));
-
-        Locked = false;
+        StationActionLocked = false;
     }
     private IEnumerator AnimateSelect()
     {
-        if (Locked) yield break;
-        Locked = true;
+        if (StationActionLocked) yield break;
+        StationActionLocked = true;
+        ScrollLocked = true;
 
         var station = stations[currentStationIndex];
-        //Animate into position.
-        /*var startPosition = substanceLocation.transform.position;
-        yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
-        {
-            substanceObject.transform.localPosition = Vector3.Lerp(startPosition, station.substanceLocation.transform.position, t);
-        }));*/
         //Do the thing.
 		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
-
         UpdateVesselArt();
 
-        //Animate out of position.
-        /*
-        yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
-        {
-            substanceObject.transform.localPosition = Vector3.Lerp(station.substanceLocation.transform.position, substanceLocation.position, t);
-        })); ;
-        */
-
-        Locked = false;
+        StationActionLocked = false;
+        ScrollLocked = false;
     }
 
     void UpdateVesselArt() {
