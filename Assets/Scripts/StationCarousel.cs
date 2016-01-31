@@ -6,21 +6,27 @@ using System.Linq;
 using Rand = UnityEngine.Random;
 using Obj = UnityEngine.Object;
 
+//housekeeping class to group parameters in the inspector
+[Serializable]
+public class CarouselSettings 
+{
+    public float rotationalVelocity = 80; // degrees/second (I think)
+    public float radiusInTime = 0.25f; // seconds
+    public float radiusOutTime = 0.13f; // seconds 
+    public float carouselRadius = 10; // units
+    public float activeRadius = 5; //units
+    public float arcPerStation = 30; //degrees
+}
+
 public class StationCarousel : MonoBehaviour {
-    public Substance substance; // this is the substance, duh
-
-
     public Station[] stations;
-    public float arcPerStation;
-    public int currentStationIndex = 0;
-
     //Carousel animation members.
-    public float rotationalVelocity;
-    public float radiusInTime;
-    public float radiusOutTime;
-    public float carouselRadius;
-    public float activeRadius;
-    AnimationRunner animator = new AnimationRunner();
+    [SerializeField] private CarouselSettings settings = new CarouselSettings();
+    private Substance substance = new Substance(1); // this is the substance, duh
+    private int currentStationIndex = 0;
+    private AnimationRunner animator = new AnimationRunner();
+
+    public bool Locked {get; private set;} //animation lock
 
     //Input timing members
     private float tapThreshold = 0.25f;
@@ -107,37 +113,34 @@ public class StationCarousel : MonoBehaviour {
 
     private Quaternion GetStationRotation(int index)
     {
-            return Quaternion.Euler(new Vector3(transform.localRotation.x, -arcPerStation * index, transform.localRotation.z));
+            return Quaternion.Euler(new Vector3(transform.localRotation.x, -settings.arcPerStation * index, transform.localRotation.z));
     }
-            
-    private bool animating; //animation lock
     private IEnumerator AnimateToIndex(int rotateToIndex)
     {
-        if (animating) yield break;
-        animating = true;
+        if (Locked) yield break;
+        Locked = true;
 
         //Rotation animation
         Quaternion finishRotation = GetStationRotation(rotateToIndex);
-        float normalizedTotalTime = (arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / rotationalVelocity;
+        float normalizedTotalTime = (settings.arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / settings.rotationalVelocity;
         Action<float> Slerp = (t) => {
             iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeOutBounce, "time", t));
         };
         
         //Current station lerps to carousel circumference
-        yield return StartCoroutine(animator.RunAnimation(radiusOutTime, LerpStationToRadius(carouselRadius)));
+        yield return StartCoroutine(animator.RunAnimation(settings.radiusOutTime, LerpStationToRadius(settings.carouselRadius)));
         //Carousel slerps to destination station
         yield return StartCoroutine(animator.RunAnimation(normalizedTotalTime,Slerp));
         currentStationIndex = rotateToIndex;
         //New station lerps to active distance
-        yield return StartCoroutine(animator.RunAnimation(radiusInTime, LerpStationToRadius(activeRadius)));
+        yield return StartCoroutine(animator.RunAnimation(settings.radiusInTime, LerpStationToRadius(settings.activeRadius)));
 
-        animating = false;
+        Locked = false;
     }
-
     private IEnumerator AnimateSelect()
     {
-        if (animating) yield break;
-        animating = true;
+        if (Locked) yield break;
+        Locked = true;
 
 
         //Animate into position.
@@ -146,7 +149,7 @@ public class StationCarousel : MonoBehaviour {
         //Animate out of position.
 
 
-        animating = false;
+        Locked = false;
     }
 
 
@@ -171,10 +174,10 @@ public class StationCarousel : MonoBehaviour {
             Debug.Log("Setting index " + i);
             var station = stations[i];
             var rotator = station.transform.parent;
-            rotator.localRotation = Quaternion.Euler(new Vector3(rotator.localRotation.x, arcPerStation * i, rotator.localRotation.z));
-            station.transform.localPosition = new Vector3(0, 0, carouselRadius);
+            rotator.localRotation = Quaternion.Euler(new Vector3(rotator.localRotation.x, settings.arcPerStation * i, rotator.localRotation.z));
+            station.transform.localPosition = new Vector3(0, 0, settings.carouselRadius);
         }
-        stations[currentStationIndex].transform.localPosition = new Vector3(0, 0, activeRadius);
+        stations[currentStationIndex].transform.localPosition = new Vector3(0, 0, settings.activeRadius);
         transform.localRotation = GetStationRotation(currentStationIndex);
     }
 }
