@@ -11,7 +11,7 @@ public class StationCarousel : MonoBehaviour {
     //we'll change this to an array of 'Stations'
     public GameObject[] stations;
     public float arcPerStation;
-    public int currentStationIndex = 0;
+    private int currentStationIndex = 0;
 
     public float rotationalVelocity;
     public float radiusInTime;
@@ -22,34 +22,27 @@ public class StationCarousel : MonoBehaviour {
 
     AnimationRunner animator = new AnimationRunner();
 
-    void Update()
+    private void Update()
     {
-        if(Input.GetMouseButtonUp(0))
+        bool direction = false;
+        if (Input.GetMouseButtonUp(0) && SwipeInput.GetSwipeDirection(ref direction))
         {
-            NextStation();
-        }
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            PreviousStation();
+            if (direction) NextStation();
+            else PreviousStation();
         }
     }
-     
-
-
-
-
 
     [ContextMenu("TestNext")]
-    public void NextStation()
+    private void NextStation()
     {
         //stations dont wrap
         if(currentStationIndex >= stations.Length - 1) return;
         StartCoroutine(AnimateToCurrentIndex(currentStationIndex + 1));
     }
     [ContextMenu("TestPrevious")]
-    public void PreviousStation()
+    private void PreviousStation()
     {
-        if (currentStationIndex < 0) return;
+        if (currentStationIndex < 1) return;
         StartCoroutine(AnimateToCurrentIndex(currentStationIndex - 1));
 
     }
@@ -66,11 +59,13 @@ public class StationCarousel : MonoBehaviour {
         Quaternion finishRotation = Quaternion.Euler(new Vector3(startRotEuler.x, -(arcPerStation * rotateToIndex), startRotEuler.z));
         float normalizedTotalTime = (arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / rotationalVelocity;
         Action<float> Slerp = (t) => {
-            transform.localRotation = Quaternion.Slerp(startRotation, finishRotation, t);
+            iTween.RotateTo(this.gameObject, iTween.Hash("rotation", finishRotation.eulerAngles, "easeType", iTween.EaseType.easeOutBounce, "time", t));
         };
 
         yield return StartCoroutine(animator.RunAnimation(radiusOutTime, LerpStationToRadius(carouselRadius)));
         yield return StartCoroutine(animator.RunAnimation(normalizedTotalTime,Slerp));
+
+
         currentStationIndex = rotateToIndex;
         yield return StartCoroutine(animator.RunAnimation(radiusInTime, LerpStationToRadius(activeRadius)));
 
@@ -83,10 +78,9 @@ public class StationCarousel : MonoBehaviour {
         var startPosition = station.transform.localPosition; 
         var finalPosition = new Vector3(startPosition.x, startPosition.y, endRadius);
 
-        var stationToReturn = stations[currentStationIndex];
         Action<float> ReturnStation = (t) =>
         {
-            stationToReturn.transform.localPosition = Vector3.Lerp(startPosition, finalPosition, t);
+            iTween.MoveTo(station, iTween.Hash("position",finalPosition,"time",t,"easeType",iTween.EaseType.easeInOutBounce,"islocal",true));
         };
         return ReturnStation;
     }
