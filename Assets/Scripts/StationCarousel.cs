@@ -20,7 +20,7 @@ public class CarouselSettings
 
 public class StationCarousel : MonoBehaviour {
     public Station[] stations;
-    private Substance substance = new Substance(1); // this is the substance, duh
+    private Substance substance = new Substance(0); // this is the substance, duh
 
     public HumourDisplay vesselHumourDisplay;
 
