@@ -18,12 +18,15 @@ public class GameMeta : MonoBehaviour
 		StartCoroutine(countDownTime());
 	}
 
-	//TODO: timer
 	//show instructions?
 	//during a game it should be the same
 
-	//score?
-	//post game scene?
+	//TODO: post game scene?
+	public void AddToScore()
+	{
+		_score++;
+		_scoreController.SetScore(_score);
+	}
 
 	private IEnumerator countDownTime()
 	{
