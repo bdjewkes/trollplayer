@@ -17,7 +17,7 @@ public class StationSubmit : Station
 	public override IEnumerator PerformAction(Substance substance)
 	{
 		yield return new WaitForSeconds(timeToReact);
-		var successfulReaction = substance.State == constant;
+		var successfulReaction = (substance.State & 1) > 0;
 
 		if(successfulReaction)
 		{
@@ -28,12 +28,16 @@ public class StationSubmit : Station
 
             var spawned = (GameObject)Instantiate(successEnding.objectToSpawnWhenStatusHappens, transform.position, Quaternion.identity);
             Destroy(spawned, 1f);
+
+            substance.Clear();
 		} else
 		{
 			failureEnding.timesEndingtimeEncounteredBeforeResetting--;
 
             var spawned = (GameObject)Instantiate(failureEnding.objectToSpawnWhenStatusHappens, transform.position + failureEnding.objectToSpawnWhenStatusHappens.transform.position, Quaternion.identity);
             Destroy(spawned, 1f);
+
+            substance.Clear();
 		}
 			
 
