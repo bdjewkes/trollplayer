@@ -37,6 +37,8 @@ public class StationCarousel : MonoBehaviour {
     {
         //Enforce the settings.
         ResetCarousel();
+
+        vesselHumourDisplay.DisplaySubstance(substance);
     }
     
     //Input timing members
@@ -155,22 +157,23 @@ public class StationCarousel : MonoBehaviour {
 
         var station = stations[currentStationIndex];
         //Animate into position.
-        var startPosition = substanceLocation.transform.position;
+        /*var startPosition = substanceLocation.transform.position;
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
             substanceObject.transform.localPosition = Vector3.Lerp(startPosition, station.substanceLocation.transform.position, t);
-        }));
+        }));*/
         //Do the thing.
 		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
 
         UpdateVesselArt();
 
         //Animate out of position.
+        /*
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
             substanceObject.transform.localPosition = Vector3.Lerp(station.substanceLocation.transform.position, substanceLocation.position, t);
         })); ;
-
+        */
 
         Locked = false;
     }

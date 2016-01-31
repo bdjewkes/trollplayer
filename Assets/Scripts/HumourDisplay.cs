@@ -7,13 +7,12 @@ public class HumourDisplay : MonoBehaviour {
     [SerializeField]
     int testSubstanceState;
 
-    void Awake() {
-        DisplaySubstance(new Substance(0));
-    }
+    public bool invert;
 
     public void DisplaySubstance(Substance substance) {
         for (int i = 0; i < Substance.NUM_BITS; i++) {
             bool bitSet = ((1 << i) & substance.State) > 0;
+            if (invert) bitSet = !bitSet;
             onBits[i].SetActive(bitSet);            
         }
     }
