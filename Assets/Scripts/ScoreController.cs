@@ -4,7 +4,6 @@ using TMPro;
 
 public class ScoreController : MonoBehaviour
 {
-	private int _score;
 	[SerializeField] private NumberScore _numberScore;
 
 	[SerializeField] private GoldScore _goldScore;
@@ -15,9 +14,8 @@ public class ScoreController : MonoBehaviour
 
 	public void SetScore(int score)
 	{
-		_score = 0;
-		_numberScore.SetScore(0);
-		_goldScore.SetScore(0);
+		_numberScore.SetScore(score);
+		_goldScore.SetScore(score);
 	}
 }
 
