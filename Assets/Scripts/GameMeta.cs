@@ -16,7 +16,14 @@ public class GameMeta : MonoBehaviour
 	[SerializeField] private float _totalTimeInSession = 120f;
 	private int _score;
 	[SerializeField] private ScoreController _scoreController;
+	[SerializeField]
+	private TextMeshPro _roundStartShowTargetText;
 
+	[SerializeField] private GameObject roundStartGO;
+	[SerializeField]
+	private GameObject outtroGO;
+	[SerializeField]
+	private TextMeshPro _outtroText;
 	[SerializeField] private TextMeshPro _timer;
 	public bool gameIsDone;
 
@@ -55,9 +62,15 @@ public class GameMeta : MonoBehaviour
 	private bool _roundFailed = false;
 	private IEnumerator countDownTime()
 	{
+		int lastGoldRequirement = _roundsDescriptions[_roundsDescriptions.Length - 1].targetGold;
 		foreach (var roundDescription in _roundsDescriptions)
 		{
 			yield return StartCoroutine(handleRound(roundDescription));
+			if(_score > lastGoldRequirement)
+			{
+				break; //don't go through a whole round if we won
+			}
+
 		}
 
 		//TODO: celebrate ending ( coroutine? animation?)
@@ -69,6 +82,13 @@ public class GameMeta : MonoBehaviour
 	{
 		_roundFailed = false;
 		var timeLeft = round.RoundTime;
+		outtroGO.SetActive(false);
+
+		roundStartGO.SetActive(true);
+        _roundStartShowTargetText.SetText(string.Format("{0} gold in {1} seconds", round.targetGold,round.RoundTime));
+		yield return new WaitForSeconds(3f);
+		roundStartGO.SetActive(false);
+
 		while(timeLeft > 0 && !_roundFailed)
 		{
 			_timer.SetText(string.Format("{0:0.00}s", timeLeft));
@@ -80,6 +100,10 @@ public class GameMeta : MonoBehaviour
 			Debug.Log("timer done, ending round");
 		if(_roundFailed)
 			Debug.Log("round failed, ending round");
+		outtroGO.SetActive(true);
+		_outtroText.SetText(string.Format("you got {0} gold in {1:0.0}s seconds", _score, (round.RoundTime - timeLeft)));
+		yield return new WaitForSeconds(3f);
+		outtroGO.SetActive(false);
 	}
 
 
