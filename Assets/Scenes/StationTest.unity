@@ -85,11 +85,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!82 &274417201 stripped
-AudioSource:
-  m_PrefabParentObject: {fileID: 8224666, guid: cc14bc3b02c2a3c4f86d603fdffe99a4,
-    type: 2}
-  m_PrefabInternal: {fileID: 811399975}
 --- !u!1001 &526488840
 Prefab:
   m_ObjectHideFlags: 0
@@ -187,7 +182,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 404786, guid: cc14bc3b02c2a3c4f86d603fdffe99a4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.089
       objectReference: {fileID: 0}
     - target: {fileID: 404786, guid: cc14bc3b02c2a3c4f86d603fdffe99a4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -213,14 +208,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 11420028, guid: cc14bc3b02c2a3c4f86d603fdffe99a4, type: 2}
-      propertyPath: successEnding.soundToPlay
-      value: 
-      objectReference: {fileID: 274417201}
-    - target: {fileID: 11420028, guid: cc14bc3b02c2a3c4f86d603fdffe99a4, type: 2}
-      propertyPath: failureEnding.soundToPlay
-      value: 
-      objectReference: {fileID: 1093342966}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc14bc3b02c2a3c4f86d603fdffe99a4, type: 2}
   m_IsPrefabParent: 0
@@ -310,11 +297,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!82 &1093342966 stripped
-AudioSource:
-  m_PrefabParentObject: {fileID: 8254660, guid: cc14bc3b02c2a3c4f86d603fdffe99a4,
-    type: 2}
-  m_PrefabInternal: {fileID: 811399975}
 --- !u!1001 &1101110957
 Prefab:
   m_ObjectHideFlags: 0
