@@ -33,7 +33,7 @@ public class StationCarousel : MonoBehaviour {
     public bool Locked {get; private set;} //animation lock
 
     //Input timing members
-    private float tapThreshold = 0.25f;
+    private float tapThreshold = 0.15f;
     private float minSwipeMagnitude = 50;
     Vector3 mouseStart;
     private float tapTime;
@@ -62,11 +62,11 @@ public class StationCarousel : MonoBehaviour {
                 {
                     if (move.x > 0)
                     {
-                        NextStation();
+                        PreviousStation();
                     }
                     else
                     {
-                        PreviousStation();
+                        NextStation();
                     }
                 }
                 //Vertical swipe:
@@ -151,14 +151,14 @@ public class StationCarousel : MonoBehaviour {
         var startPosition = substanceLocation.transform.position;
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
-            substanceObject.transform.localPosition = Vector3.Lerp(startPosition, station.transform.position, t);
+            substanceObject.transform.localPosition = Vector3.Lerp(startPosition, station.substanceLocation.transform.position, t);
         }));
         //Do the thing.
 		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
         //Animate out of position.
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
-            substanceObject.transform.localPosition = Vector3.Lerp(station.transform.position, substanceLocation.position, t);
+            substanceObject.transform.localPosition = Vector3.Lerp(station.substanceLocation.transform.position, substanceLocation.position, t);
         })); ;
 
 
