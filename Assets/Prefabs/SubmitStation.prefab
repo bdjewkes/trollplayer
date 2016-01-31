@@ -483,6 +483,7 @@ MonoBehaviour:
   timeToPlayFX: 1
   measuresBits: 00000000
   testSubstanceState: 1
+  substanceLocation: {fileID: 191904}
   successEnding:
     objectToEnableWhenStatusHappens: {fileID: 113512}
     timesEndingtimeEncounteredBeforeResetting: 1
