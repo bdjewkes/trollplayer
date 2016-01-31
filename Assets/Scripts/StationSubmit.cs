@@ -38,7 +38,7 @@ public class StationSubmit : Station
 		{
 			//change the state of the reaction vessel back to zero?
 			//reset game?
-			FindObjectOfType<GameMeta>().ReloadGame();
+			FindObjectOfType<AdditiveLoad>().ReloadGame();
 		}
 		if(successfulReaction)
 		{
