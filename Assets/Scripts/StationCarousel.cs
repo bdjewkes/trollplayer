@@ -24,7 +24,6 @@ public class StationCarousel : MonoBehaviour {
     public Transform substanceLocation; // this is where the substance lives while not at a station
     private Substance substance = new Substance(1); // this is the substance, duh
 
-
     //Carousel animation members.
     [SerializeField] private CarouselSettings settings = new CarouselSettings();
     [SerializeField] int currentStationIndex = 0;
@@ -32,6 +31,12 @@ public class StationCarousel : MonoBehaviour {
 
     public bool Locked {get; private set;} //animation lock
 
+    void Awake()
+    {
+        //Enforce the settings.
+        ResetCarousel();
+    }
+    
     //Input timing members
     private float tapThreshold = 0.25f;
     private float minSwipeMagnitude = 50;
