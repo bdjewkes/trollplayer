@@ -22,25 +22,30 @@ public class StationCarousel : MonoBehaviour {
 
     AnimationRunner animator = new AnimationRunner();
 
-    public float minSwipeThreshold; 
-    Vector3 lastMouse;
+    public float minSwipeThreshold = 50;
+    bool swipeThresholdCrossed = false;
+    Vector3 mouseStart;
     void Update()
     {
-        var move = lastMouse - Input.mousePosition;
-        //Only swipe if the threshold has been overcome, and it is mostly in the 
-        //x direction.
-        if (move.magnitude > minSwipeThreshold && (Mathf.Abs(move.x) > Mathf.Abs(move.y)))
+        if (Input.GetMouseButtonDown(0)) mouseStart = Input.mousePosition;
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
         {
-            if (move.x > 0)
+            Vector3 move = Input.mousePosition - mouseStart;
+            if (Input.GetMouseButtonUp(0) 
+                && move.magnitude > minSwipeThreshold 
+                && (Mathf.Abs(move.x) > Mathf.Abs(move.y)))
             {
-                NextStation();
+                if (move.x > 0)
+                {
+                    NextStation();
+                }
+                else
+                {
+                    PreviousStation();
+                }
             }
-            else
-            {
-                PreviousStation();
-            }
+
         }
-        lastMouse = Input.mousePosition;
     }
 
     [ContextMenu("TestNext")]
@@ -94,5 +99,11 @@ public class StationCarousel : MonoBehaviour {
         };
         return ReturnStation;
     }
+
+    private void ResetCarousel()
+    {
+
+    }
+
     
 }
