@@ -10,7 +10,6 @@ public class AdditiveLoad : MonoBehaviour
 	void Start()
 	{
 		StartCoroutine(LoadScenes());
-		//Destroy(gameObject);  //get rid of the the sceneloader
 	}
 
 	IEnumerator LoadScenes()
