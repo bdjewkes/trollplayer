@@ -154,7 +154,7 @@ public class StationCarousel : MonoBehaviour {
             substanceObject.transform.localPosition = Vector3.Lerp(startPosition, station.transform.position, t);
         }));
         //Do the thing.
-        yield return StartCoroutine(station.PerformAction(substance));
+		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
         //Animate out of position.
         yield return StartCoroutine(animator.RunAnimation(0.25f, t =>
         {
