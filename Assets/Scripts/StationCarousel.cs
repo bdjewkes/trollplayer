@@ -179,9 +179,13 @@ public class StationCarousel : MonoBehaviour {
         StationActionLocked = false;
         ScrollLocked = false;
     }
-
     void UpdateVesselArt() {
         vesselHumourDisplay.DisplaySubstance(substance);
+    }
+    IEnumerator PlayAudioWithDelay()
+    {
+        yield return new WaitForSeconds(0.25f);
+        GetComponent<AudioSource>().PlayOneShot(audio);
     }
 
     private Action<float> LerpStationToRadius(float endRadius)

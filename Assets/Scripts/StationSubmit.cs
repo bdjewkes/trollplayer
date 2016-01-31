@@ -38,7 +38,8 @@ public class StationSubmit : Station
             var spawned = (GameObject)Instantiate(failureEnding.objectToSpawnWhenStatusHappens, transform.position + failureEnding.objectToSpawnWhenStatusHappens.transform.position, Quaternion.identity);
             Destroy(spawned, 1f);
 
-            failureEnding.soundToPlay.Play();
+			if(failureEnding.soundToPlay != null)
+	            failureEnding.soundToPlay.Play();
 
             substance.Clear();
 		}
