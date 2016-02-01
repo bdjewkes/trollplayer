@@ -108,7 +108,8 @@ public class AdditiveLoad : MonoBehaviour
 		{
 			0,
 			1,
-			5
+			5,
+			6
 			//SceneManager.GetSceneAt(0).name,
 			//SceneManager.GetSceneByName(OUTRO_SCENE_NAME).name,
 			//SceneManager.GetSceneByName(INTRO_SCENE_NAME).name
