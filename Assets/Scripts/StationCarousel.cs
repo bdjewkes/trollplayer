@@ -185,7 +185,7 @@ public class StationCarousel : MonoBehaviour {
     IEnumerator PlayAudioWithDelay()
     {
         yield return new WaitForSeconds(0.25f);
-        GetComponent<AudioSource>().PlayOneShot(audio);
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>());
     }
 
     private Action<float> LerpStationToRadius(float endRadius)
