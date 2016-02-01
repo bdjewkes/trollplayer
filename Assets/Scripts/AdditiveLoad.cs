@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class AdditiveLoad : MonoBehaviour
 {
 	private const string OUTRO_SCENE_NAME = "outro";
+    private const string OUTRO_SCENE_FAILURE_NAME = "outroFailure";
 	private const string INTRO_SCENE_NAME = "intro";
 	private IEnumerator _loadSceneRoutineReference;
+    private bool _failed = false;
 
 	//public List<string> scenesToLoad;
 	private Camera _mainCamera;
@@ -54,7 +56,7 @@ public class AdditiveLoad : MonoBehaviour
 
 		yield return StartCoroutine(waitForGameToFinish());
 
-		yield return StartCoroutine(waitForOuttroToFinish());
+		yield return StartCoroutine(waitForOuttroToFinish(_failed ? OUTRO_SCENE_FAILURE_NAME: OUTRO_SCENE_NAME));
 
 		Destroy(gameObject); //remove this gameobject when done
 		_loadSceneRoutineReference = null; //for symmetry, make sure to set this to nullso that we cans trt onloading
@@ -81,9 +83,9 @@ public class AdditiveLoad : MonoBehaviour
 		SceneManager.UnloadScene(INTRO_SCENE_NAME);
 	}
 
-	private IEnumerator waitForOuttroToFinish()
+	private IEnumerator waitForOuttroToFinish(string outroName)
 	{
-		SceneManager.LoadScene(OUTRO_SCENE_NAME,LoadSceneMode.Additive);
+		SceneManager.LoadScene(outroName, LoadSceneMode.Additive);
 		yield return null; //paranoia in waiting for loading before trying to grab a reference
 		destroyOtherCameras(_mainCamera.gameObject);
 
@@ -97,7 +99,7 @@ public class AdditiveLoad : MonoBehaviour
 			yield return null;
 		}
 		FindObjectOfType<OuttroController>().OnOuttroDone -= outtroDoneDelegate;
-		SceneManager.UnloadScene(OUTRO_SCENE_NAME);
+		SceneManager.UnloadScene(outroName);
 	}
 
 	private IEnumerator waitForGameToFinish()
@@ -126,6 +128,7 @@ public class AdditiveLoad : MonoBehaviour
 		{
 			yield return null;
 		}
+        _failed = gameMeta.Failed();
 		for(var i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
 		{
 			if(scenesToNotLoadForMainScene.Contains(i))

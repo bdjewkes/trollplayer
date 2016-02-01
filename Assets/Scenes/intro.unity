@@ -380,8 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 977d41aba187bce44aec35f5a10b73ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.05
-  waitTime: 1
+  speed: 0.075
+  waitTime: 0.75
   texts:
   - 'Apprentice, the King demands more gold! '
   - The Rites of Alchemy are complex and mysterious.
@@ -390,6 +390,8 @@ MonoBehaviour:
   - "Make haste! The King\u2019s men are nearly at our door."
   - Heed my words carefully and riches will be your reward!
   textMesh: {fileID: 1581626013}
+  introControl: {fileID: 1055789387}
+  outroControl: {fileID: 0}
 --- !u!224 &1581626019
 RectTransform:
   m_ObjectHideFlags: 0
