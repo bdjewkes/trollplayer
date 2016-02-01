@@ -66,7 +66,7 @@ public class GameMeta : MonoBehaviour
 		foreach (var roundDescription in _roundsDescriptions)
 		{
 			yield return StartCoroutine(handleRound(roundDescription));
-			if(_score > lastGoldRequirement)
+			if(_score >= lastGoldRequirement)
 			{
 				break; //don't go through a whole round if we won
 			}
