@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using TMPro;
+using System;
 
 public class TypeWriterText : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class TypeWriterText : MonoBehaviour
     public string[] texts;
 
     public TextMeshPro textMesh;
+    public IntroController introControl;
+    public OuttroController outroControl;
 
     private string currentText = "";
     private int currentEntry = 0;
@@ -27,7 +30,7 @@ public class TypeWriterText : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            currentChar = texts[currentEntry].Length;
+            currentChar = texts[Math.Min(currentEntry,texts.Length-1)].Length - 1;
         }
     }
 
@@ -42,7 +45,7 @@ public class TypeWriterText : MonoBehaviour
                 currentChar++;
                 yield return new WaitForSeconds(speed);
             }
-
+            textMesh.SetText(texts[currentEntry]);
             yield return new WaitForSeconds(waitTime);
 
             currentText = "";
@@ -50,6 +53,15 @@ public class TypeWriterText : MonoBehaviour
             currentEntry++;
             yield return new WaitForSeconds(speed);
         }
-        FindObjectOfType<IntroController>().IntroDone();
+    
+        if(introControl)
+        {
+            introControl.OnIntroDone();
+        }    
+        
+        if(outroControl)
+        {
+            outroControl.OnOuttroDone();
+        }
     }
 }

@@ -29,6 +29,11 @@ public class GameMeta : MonoBehaviour
 		_scoreController.SetScore(_score);
 	}
 
+    public bool Failed()
+    {
+        return _score <= 0;
+    }
+
 	private IEnumerator countDownTime()
 	{
 		var timeLeft = _totalTimeInSession;
