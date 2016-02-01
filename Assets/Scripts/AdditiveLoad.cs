@@ -108,7 +108,8 @@ public class AdditiveLoad : MonoBehaviour
 		{
 			0,
 			1,
-			5
+			5,
+			6
 			//SceneManager.GetSceneAt(0).name,
 			//SceneManager.GetSceneByName(OUTRO_SCENE_NAME).name,
 			//SceneManager.GetSceneByName(INTRO_SCENE_NAME).name
@@ -128,6 +129,9 @@ public class AdditiveLoad : MonoBehaviour
 		{
 			yield return null;
 		}
+
+        yield return new WaitForSeconds(1); // give a little break
+
         _failed = gameMeta.Failed();
 		for(var i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
 		{

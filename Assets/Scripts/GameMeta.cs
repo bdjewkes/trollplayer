@@ -100,6 +100,11 @@ public class GameMeta : MonoBehaviour
 			_timer.SetText(string.Format("{0:0.00}s", timeLeft));
 			yield return null;
 
+            int lastGoldRequirement = _roundsDescriptions[_roundsDescriptions.Length - 1].targetGold;
+            if (_score >= lastGoldRequirement) {
+                yield break; // bail
+            }
+
 			timeLeft -= Time.deltaTime;
 		}
 		if(timeLeft <= 0)
