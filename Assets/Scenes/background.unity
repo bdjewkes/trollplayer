@@ -4084,7 +4084,7 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -4.6}
+  m_AnchoredPosition: {x: 27, y: 3.3}
   m_SizeDelta: {x: 60, y: 3.3848598}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &390019957
@@ -4147,7 +4147,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -4156,8 +4156,8 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_havePropertiesChanged: 0
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -5074,14 +5074,14 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 443888809}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12.8}
+  m_LocalPosition: {x: 0, y: 0, z: -3.6}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1959208629}
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.8, y: -0.1}
+  m_AnchoredPosition: {x: 16.8, y: -11.9}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &448152224
@@ -7643,7 +7643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &649915649
 Transform:
   m_ObjectHideFlags: 0
@@ -7651,7 +7651,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 649915648}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.47, y: -5.58, z: -6.29}
+  m_LocalPosition: {x: 9.47, y: -5.63, z: -6.29}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.22222224}
   m_Children:
   - {fileID: 1916734529}
@@ -7995,7 +7995,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -8005,7 +8005,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -8016,14 +8016,14 @@ MonoBehaviour:
   m_maskType: 0
 --- !u!222 &668621378
 CanvasRenderer:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 22273786, guid: 482233ac32326204295b178ce77906fa,
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 668621375}
 --- !u!33 &668621379
 MeshFilter:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 3379656, guid: 482233ac32326204295b178ce77906fa,
     type: 2}
   m_PrefabInternal: {fileID: 0}
@@ -18140,7 +18140,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1153344200}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.88, y: -11.4, z: 6.1}
+  m_LocalPosition: {x: -9.62, y: -21.18, z: -6.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 65838459}
@@ -21147,7 +21147,7 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -1.4}
+  m_AnchoredPosition: {x: 10, y: -3.1}
   m_SizeDelta: {x: 60, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1427411679
@@ -21210,7 +21210,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -21219,8 +21219,8 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_havePropertiesChanged: 0
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -24623,7 +24623,7 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -8.3}
+  m_AnchoredPosition: {x: 27, y: 0.3}
   m_SizeDelta: {x: 60, y: 3.3848598}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1669824207
@@ -24686,7 +24686,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -24695,8 +24695,8 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_havePropertiesChanged: 0
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -26409,7 +26409,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 6.0690103}
+  m_AnchoredPosition: {x: 10, y: 4.4}
   m_SizeDelta: {x: 60, y: 3.0619242}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1803757657
@@ -26472,7 +26472,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -26481,8 +26481,8 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_havePropertiesChanged: 0
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -27185,14 +27185,14 @@ RectTransform:
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1877321957
 CanvasRenderer:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 22264340, guid: 482233ac32326204295b178ce77906fa,
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1877321955}
 --- !u!33 &1877321958
 MeshFilter:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 3376456, guid: 482233ac32326204295b178ce77906fa,
     type: 2}
   m_PrefabInternal: {fileID: 0}
@@ -27307,7 +27307,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -27317,7 +27317,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -27661,7 +27661,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 2.3}
+  m_AnchoredPosition: {x: 10, y: 0.6}
   m_SizeDelta: {x: 60, y: 3.970183}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1891116784
@@ -27724,7 +27724,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -27733,8 +27733,8 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_havePropertiesChanged: 0
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
@@ -28156,7 +28156,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.967848, y: 10.104473}
+  m_AnchoredPosition: {x: -4, y: 8}
   m_SizeDelta: {x: 26.543327, y: 3.9909294}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1916734530
@@ -28219,7 +28219,7 @@ MonoBehaviour:
   m_overflowMode: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -28228,8 +28228,8 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_havePropertiesChanged: 1
-  m_isInputParsingRequired: 1
+  m_havePropertiesChanged: 0
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_isNewTextObject: 0
   m_uvOffset: {x: 0, y: 0}
