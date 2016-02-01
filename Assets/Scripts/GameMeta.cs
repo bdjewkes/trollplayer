@@ -54,13 +54,19 @@ public class GameMeta : MonoBehaviour
 		_scoreController.SetScore(_score);
 	}
 
+    public bool Failed()
+    {
+        return _score <= 0;
+    }
+
 	public void RoundFinishedDueToFailure()
 	{
 		_roundFailed = true;
 	}
 
 	private bool _roundFailed = false;
-	private IEnumerator countDownTime()
+
+    private IEnumerator countDownTime()
 	{
 		int lastGoldRequirement = _roundsDescriptions[_roundsDescriptions.Length - 1].targetGold;
 		foreach (var roundDescription in _roundsDescriptions)
