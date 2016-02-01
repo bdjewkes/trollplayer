@@ -171,7 +171,7 @@ public class StationCarousel : MonoBehaviour {
        
         var station = stations[currentStationIndex];
         //Do the thing.
-        GetComponent<AudioSource>().PlayOneShot(leverSound);
+        StartCoroutine(PlayAudioWithDelay(leverSound));
 		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
         
         UpdateVesselArt();
@@ -182,10 +182,10 @@ public class StationCarousel : MonoBehaviour {
     void UpdateVesselArt() {
         vesselHumourDisplay.DisplaySubstance(substance);
     }
-    IEnumerator PlayAudioWithDelay()
+    IEnumerator PlayAudioWithDelay(AudioClip audio)
     {
         yield return new WaitForSeconds(0.25f);
-        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>());
+        GetComponent<AudioSource>().PlayOneShot(audio);
     }
 
     private Action<float> LerpStationToRadius(float endRadius)
