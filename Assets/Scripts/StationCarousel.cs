@@ -24,11 +24,14 @@ public class StationCarousel : MonoBehaviour {
 
     public HumourDisplay vesselHumourDisplay;
 
+
+    public AudioClip carouselSound;
+    public AudioClip leverSound;
+
     //Carousel animation members.
     [SerializeField] private CarouselSettings settings = new CarouselSettings();
     [SerializeField] int currentStationIndex = 0;
     private AnimationRunner animator = new AnimationRunner();
-
 
     /// <summary>
     /// You should only be able to perform an action on a station
@@ -141,7 +144,7 @@ public class StationCarousel : MonoBehaviour {
     {
         if (StationActionLocked) yield break;
         StationActionLocked = true;
-        
+        GetComponent<AudioSource>().PlayOneShot(carouselSound); 
         //Rotation animation
         Quaternion finishRotation = GetStationRotation(rotateToIndex);
         float normalizedTotalTime = (settings.arcPerStation * Mathf.Abs(currentStationIndex - rotateToIndex)) / settings.rotationalVelocity;
@@ -165,18 +168,24 @@ public class StationCarousel : MonoBehaviour {
         if (StationActionLocked) yield break;
         StationActionLocked = true;
         ScrollLocked = true;
-
+       
         var station = stations[currentStationIndex];
         //Do the thing.
+        StartCoroutine(PlayAudioWithDelay(leverSound));
 		yield return StartCoroutine(stations[currentStationIndex].PerformAction(substance));
+        
         UpdateVesselArt();
 
         StationActionLocked = false;
         ScrollLocked = false;
     }
-
     void UpdateVesselArt() {
         vesselHumourDisplay.DisplaySubstance(substance);
+    }
+    IEnumerator PlayAudioWithDelay(AudioClip audio)
+    {
+        yield return new WaitForSeconds(0.25f);
+        GetComponent<AudioSource>().PlayOneShot(audio);
     }
 
     private Action<float> LerpStationToRadius(float endRadius)

@@ -22,12 +22,13 @@ public class StationSubmit : Station
 		if(successfulReaction)
 		{
 			Jot.Out("Submission successful!");
-			//successEnding.objectToEnableWhenStatusHappens.SetActive(true);
             var gold = (GameObject)Instantiate(goldPrefab, transform.position, UnityEngine.Random.rotationUniform);
             gold.GetComponent<Rigidbody>().AddForce(goldForce, ForceMode.VelocityChange);
 
-            var spawned = (GameObject)Instantiate(successEnding.objectToSpawnWhenStatusHappens, transform.position, Quaternion.identity);
+            var spawned = (GameObject)Instantiate(successEnding.objectToSpawnWhenStatusHappens, transform.position + new Vector3(0, 3, 0), Quaternion.identity);
             Destroy(spawned, 1f);
+
+            successEnding.soundToPlay.Play();
 
             substance.Clear();
 		} else
@@ -37,23 +38,21 @@ public class StationSubmit : Station
             var spawned = (GameObject)Instantiate(failureEnding.objectToSpawnWhenStatusHappens, transform.position + failureEnding.objectToSpawnWhenStatusHappens.transform.position, Quaternion.identity);
             Destroy(spawned, 1f);
 
+			if(failureEnding.soundToPlay != null)
+	            failureEnding.soundToPlay.Play();
+
             substance.Clear();
 		}
 			
 
 		yield return new WaitForSeconds(timeToPlayFX);
 
-		if(!successfulReaction)
-		{
-			//failureEnding.objectToSpawnWhenStatusHappens.SetActive(false);
-			
-		}
 		if(failureEnding.timesEndingtimeEncounteredBeforeResetting <= 0)
 		{
 			//change the state of the reaction vessel back to zero?
 			//reset game?
 
-			FindObjectOfType<GameMeta>().gameIsDone = true;
+			FindObjectOfType<GameMeta>().RoundFinishedDueToFailure();
 		}
 		if(successfulReaction)
 		{
@@ -63,10 +62,6 @@ public class StationSubmit : Station
 		}
 		ShowReactionFX(false);
 	}
-
-	//public GameObject[] FailureFX;
-
-	#region ending logic
 
 	[SerializeField] private EndingSequence successEnding;
 	[SerializeField] private EndingSequence failureEnding;
@@ -78,6 +73,4 @@ public class StationSubmit : Station
 		public AudioSource soundToPlay;
 		public int timesEndingtimeEncounteredBeforeResetting = 1;
 	}
-
-	#endregion ending logic
 }
