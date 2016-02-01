@@ -56,7 +56,7 @@ public class GameMeta : MonoBehaviour
 
     public bool Failed()
     {
-        return _score <= 0;
+        return _score < _roundsDescriptions[_roundsDescriptions.Length-1].targetGold;
     }
 
 	public void RoundFinishedDueToFailure()
